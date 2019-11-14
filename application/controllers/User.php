@@ -13,12 +13,6 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->model('UserModel');
-
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[User.email]');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[10]|callback__checkPassword');
-        $this->form_validation->set_rules('name', 'Name', 'trim|required|callback__checkName');
-        $this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|callback__checkNickname');
-        $this->form_validation->set_rules('phone', 'Phone', 'trim|required|numeric');
     }
 
     /**
@@ -33,8 +27,8 @@ class User extends CI_Controller
 
     public function register() {
         $input = $this->input->post();
-        
-        if($this->form_validation->run() == FALSE) {
+
+        if($this->form_validation->run('register_form') == FALSE) {
             $this->returnMsg(500,'fail', $this->form_validation->error_array());
         } else {
             $id = $this->UserModel->register($input);
