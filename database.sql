@@ -4,7 +4,7 @@ CREATE TABLE User (
     nickname VARCHAR(30) NOT NULL,
     password VARCHAR(50) NOT NULL,
     phone VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     gender VARCHAR(10),
     recommendCode VARCHAR(20) UNIQUE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
