@@ -1,5 +1,5 @@
 <?php
 
-$lang['check_name'] = "Name is incorrect";
-$lang['check_password'] = "Password is incorrect";
-$lang['check_nickname'] = "Name is incorrect";
+$lang['_checkName'] = "Name is incorrect";
+$lang['_checkPassword'] = "Password is incorrect";
+$lang['_checkNickname'] = "Nickname is incorrect";
