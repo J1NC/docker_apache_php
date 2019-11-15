@@ -32,7 +32,6 @@ class User extends CI_Controller
         }
 
         $input = $this->input->post();
-
         if($this->form_validation->run('register_form') == FALSE) {
             $this->returnMsg(500,'fail', $this->form_validation->error_array());
         } else {
@@ -64,29 +63,55 @@ class User extends CI_Controller
         $input = $this->input->input_stream();
 
         $this->form_validation->set_data($input);
-        if($user){
+        if($user) {
             if($this->form_validation->run('update_form') == FALSE) {
                 $this->returnMsg(500,'fail', $this->form_validation->error_array());
             } else {
-                if(isset($input['name'])){
+                if(isset($input['name'])) {
                     $user->name = $input['name'];
                 }
-                if(isset($input['nickname'])){
+                if(isset($input['nickname'])) {
                     $user->nickname = $input['nickname'];
                 }
-                if(isset($input['phone'])){
+                if(isset($input['phone'])) {
                     $user->phone = $input['phone'];
                 }
-                if(isset($input['gender'])){
+                if(isset($input['gender'])) {
                     $user->gender = $input['gender'];
                 }
 
                 $result = $this->UserModel->update($user, $id);
-                if($result){
+                if($result) {
                     $this->returnMsg(200, 'success', 'User Updated!');
                 } else {
                     $this->returnMsg(500, 'fail', 'User Update Failed');
                 }
+            }
+        } else {
+            $this->returnMsg(500, 'fail', 'Id is Incorrect');
+        }
+    }
+
+    /**
+     * 회원 삭제
+     * @METHOD DELETE
+     * @MainURL /user/delete/{id}
+     * @Parameter id
+     * @Response status, message
+     */
+    public function delete($id) {
+        if(strcmp($this->input->method(), 'delete')) {
+            $this->returnMsg(405, 'fail', 'Method Not Allowed');
+            return;
+        }
+
+        $user = $this->UserModel->get($id);
+        if($user) {
+            $result = $this->UserModel->delete($id);
+            if($result) {
+                $this->returnMsg(200, 'success', 'User Deleted');
+            } else {
+                $this->returnMsg(500, 'fail', 'User Delete Failed');
             }
         } else {
             $this->returnMsg(500, 'fail', 'Id is Incorrect');
@@ -120,6 +145,7 @@ class User extends CI_Controller
     public function _checkNickname($nickname) {
         return ctype_lower($nickname);
     }
+
     /**
      * @param $httpCode integer HTTP 응답 코드
      * @param $status string fail or success

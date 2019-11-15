@@ -36,6 +36,10 @@ class UserModel extends CI_Model
         return $this->db->update(self::USER_TABLE, $user, array('id' => $id));
     }
 
+    public function delete($id) {
+        return $this->db->delete(self::USER_TABLE, array('id' => $id));
+    }
+
     public function recommend($recommender, $id) {
         $result = $this->db->get_where(self::USER_TABLE, array('recommendCode' => $recommender));
         $row = $result->row();
