@@ -13,7 +13,7 @@ class UserModel extends CI_Model
         parent::__construct();
     }
 
-    public function register($user){
+    public function register($user) {
         $user['recommendCode'] = uniqid();
 
         $sql = "  INSERT INTO User
@@ -36,7 +36,11 @@ class UserModel extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function recommend($recommender, $id){
+    public function update($user, $id) {
+        return $this->db->update('User', $user, array('id' => $id));
+    }
+
+    public function recommend($recommender, $id) {
         $sql = "SELECT id
                 FROM User
                 WHERE RecommendCode = ?";
@@ -69,5 +73,16 @@ class UserModel extends CI_Model
             return $result;
         }
         return false;
+    }
+
+    public function get($id) {
+        $sql = "SELECT *
+                FROM User
+                WHERE id = ?";
+
+        $result = $this->db->query($sql, array($id));
+        $row = $result->row();
+
+        return $row;
     }
 }

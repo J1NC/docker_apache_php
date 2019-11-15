@@ -28,5 +28,23 @@ $config = array
             'label' => 'Phone',
             'rules' => 'trim|required|integer',
         )
+    ),
+    'update_form' => array
+    (
+        array(
+            'field' => 'name',
+            'label' => 'Name',
+            'rules' => 'trim|callback__checkName',
+        ),
+        array(
+            'field' => 'nickname',
+            'label' => 'Nickname',
+            'rules' => 'trim|callback__checkNickname',
+        ),
+        array(
+            'field' => 'phone',
+            'label' => 'Phone',
+            'rules' => 'trim|integer',
+        )
     )
 );

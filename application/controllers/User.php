@@ -36,10 +36,53 @@ class User extends CI_Controller
                 if(isset($input['recommender'])){
                     $this->UserModel->recommend($input['recommender'], $id);
                 }
-                $this->returnMsg(200, 'Success', 'Register Success');
+                $this->returnMsg(200, 'success', 'Register Success');
             } else {
                 $this->returnMsg(500, 'fail', 'Register Failed');
             }
+        }
+    }
+
+    /**
+     * 회원 정보 수정
+     * @METHOD PUT
+     * @MainURL /user/update/{id}
+     * @Parameter id
+     * @Body
+     *      @Optional name, nickname, phone, gender(male or female)
+     * @Response status, message
+     */
+    public function update($id){
+        $user = $this->UserModel->get($id);
+        $input = $this->input->input_stream();
+
+        $this->form_validation->set_data($input);
+        if($user){
+            if($this->form_validation->run('update_form') == FALSE) {
+                $this->returnMsg(500,'fail', $this->form_validation->error_array());
+            } else {
+                if(isset($input['name'])){
+                    $user->name = $input['name'];
+                }
+                if(isset($input['nickname'])){
+                    $user->nickname = $input['nickname'];
+                }
+                if(isset($input['phone'])){
+                    $user->phone = $input['phone'];
+                }
+                if(isset($input['gender'])){
+                    $user->gender = $input['gender'];
+                }
+
+                $result = $this->UserModel->update($user, $id);
+                if($result){
+                    $this->returnMsg(200, 'success', 'User Updated!');
+                } else {
+                    $this->returnMsg(500, 'fail', 'User Update Failed');
+                }
+            }
+        } else {
+            $this->returnMsg(500, 'fail', 'Id is Incorrect');
         }
     }
 
