@@ -26,6 +26,11 @@ class User extends CI_Controller
      */
 
     public function register() {
+        if(strcmp($this->input->method(), 'post')) {
+            $this->returnMsg(405, 'fail', 'Method Not Allowed');
+            return;
+        }
+
         $input = $this->input->post();
 
         if($this->form_validation->run('register_form') == FALSE) {
@@ -50,6 +55,11 @@ class User extends CI_Controller
      * @Response status, message
      */
     public function update($id){
+        if(strcmp($this->input->method(), 'put')) {
+            $this->returnMsg(405, 'fail', 'Method Not Allowed');
+            return;
+        }
+
         $user = $this->UserModel->get($id);
         $input = $this->input->input_stream();
 
