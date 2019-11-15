@@ -32,10 +32,7 @@ class User extends CI_Controller
             $this->returnMsg(500,'fail', $this->form_validation->error_array());
         } else {
             $id = $this->UserModel->register($input);
-            if($id > 0){
-                if(isset($input['recommender'])){
-                    $this->UserModel->recommend($input['recommender'], $id);
-                }
+            if($id > 0) {
                 $this->returnMsg(200, 'success', 'Register Success');
             } else {
                 $this->returnMsg(500, 'fail', 'Register Failed');
