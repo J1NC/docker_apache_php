@@ -43,8 +43,11 @@ class UserModel extends CI_Model
     public function recommend($recommender, $id) {
         $result = $this->db->get_where(self::USER_TABLE, array('recommendCode' => $recommender));
         $row = $result->row();
-        $recommenderId = $row->id;
-
+        if($row) {
+            $recommenderId = $row->id;
+        } else {
+            return false;
+        }
         $this->db->where(array('recommender' => $recommenderId));
         $count = $this->db->count_all_results(self::RECOMMEND_TABLE);
 
