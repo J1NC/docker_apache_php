@@ -93,30 +93,34 @@ class User extends CI_Controller
     }
 
     /**
-     * 회원 삭제
-     * @METHOD DELETE
-     * @MainURL /user/delete/{id}
+     * 회원 한명 조회
+     * @METHOD GET
+     * @MainURL /user/get/{id}
      * @Parameter id
-     * @Response status, message
+     * @Response status, message, data
      */
-    public function delete($id) {
-        if(strcmp($this->input->method(), 'delete')) {
+    public function get($id) {
+        if(strcmp($this->input->method(), 'get')) {
             $this->returnMsg(405, 'fail', 'Method Not Allowed');
             return;
         }
 
         $user = $this->UserModel->get($id);
         if($user) {
-            $result = $this->UserModel->delete($id);
-            if($result) {
-                $this->returnMsg(200, 'success', 'User Deleted');
-            } else {
-                $this->returnMsg(500, 'fail', 'User Delete Failed');
-            }
+            unset($user->password);
+            $this->returnMsg(200, 'success', 'User Found!', $user);
         } else {
             $this->returnMsg(500, 'fail', 'Id is Incorrect');
         }
     }
+
+    /**
+     * 회원 삭제
+     * @METHOD DELETE
+     * @MainURL /user/delete/{id}
+     * @Parameter id
+     * @Response status, message
+     */
 
     public function _checkName($name) {
         if(preg_match("/[0-9]/", $name))
@@ -150,7 +154,7 @@ class User extends CI_Controller
      * @param $httpCode integer HTTP 응답 코드
      * @param $status string fail or success
      * @param $message string Message
-     * @param $data mixed 
+     * @param $data mixed
      * @return mixed
      */
     private function returnMsg($httpCode, $status, $message, $data = null){
