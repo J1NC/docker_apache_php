@@ -150,15 +150,17 @@ class User extends CI_Controller
      * @param $httpCode integer HTTP 응답 코드
      * @param $status string fail or success
      * @param $message string Message
+     * @param $data mixed 
      * @return mixed
      */
-    private function returnMsg($httpCode, $status, $message){
+    private function returnMsg($httpCode, $status, $message, $data = null){
         return $this->output
             ->set_content_type('application/json')
             ->set_status_header($httpCode)
             ->set_output(json_encode(array(
                 'status' => $status,
-                'message' => $message
+                'message' => $message,
+                'data' => $data
             )));
     }
 }
