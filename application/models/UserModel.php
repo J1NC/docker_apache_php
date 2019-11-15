@@ -66,6 +66,19 @@ class UserModel extends CI_Model
         $result = $this->db->get_where(self::USER_TABLE, array('id' => $id));
         $row = $result->row();
 
+        unset($row->password);
         return $row;
+    }
+
+    public function getList($page, $limit) {
+        $offset = ($page-1) * $limit;
+
+        $result = $this->db->get(self::USER_TABLE, $limit, $offset);
+        $result = $result->result();
+
+        foreach($result as $row){
+            unset($row->password);
+        }
+        return $result;
     }
 }

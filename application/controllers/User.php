@@ -133,10 +133,34 @@ class User extends CI_Controller
 
         $user = $this->UserModel->get($id);
         if($user) {
-            unset($user->password);
             $this->returnMsg(200, 'success', 'User Found!', $user);
         } else {
             $this->returnMsg(500, 'fail', 'Id is Incorrect');
+        }
+    }
+
+    /**
+     * 회원 리스트 조회
+     * @METHOD GET
+     * @MainURL /user/getList/{page}/{limit}
+     * @Parameter page, limit
+     * @Response status, message, data
+     */
+    public function getList() {
+        if(strcmp($this->input->method(), 'get')) {
+            $this->returnMsg(405, 'fail', 'Method Not Allowed');
+            return;
+        }
+
+        $page = (int) $this->uri->segment(3, 1);
+        $limit = (int) $this->uri->segment(4, 10);
+
+        $users = $this->UserModel->getList($page, $limit);
+        if($users) {
+            unset($users->password);
+            $this->returnMsg(200, 'success', 'User Found!', $users);
+        } else {
+            $this->returnMsg(500, 'fail', 'No User Found');
         }
     }
 
