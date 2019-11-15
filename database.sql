@@ -10,9 +10,9 @@ CREATE TABLE User (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Recommend (
-    recommender INT(11) NOT NULL,
-    recommendee INT(11) NOT NULL,
-    PRIMARY KEY(recommender, recommendee),
-    FOREIGN KEY (recommender) REFERENCES User(id),
-    FOREIGN KEY (recommendee) REFERENCES User(id)
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    recommender INT(11),
+    recommendee INT(11),
+    FOREIGN KEY (recommender) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (recommendee) REFERENCES User(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
