@@ -16,17 +16,22 @@ $config = array
         array(
             'field' => 'name',
             'label' => 'Name',
-            'rules' => 'trim|required|callback__checkName',
+            'rules' => 'trim|required|callback__checkName'
         ),
         array(
             'field' => 'nickname',
             'label' => 'Nickname',
-            'rules' => 'trim|required|callback__checkNickname',
+            'rules' => 'trim|required|callback__checkNickname'
         ),
         array(
             'field' => 'phone',
             'label' => 'Phone',
-            'rules' => 'trim|required|integer',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'gender',
+            'label' => 'Gender',
+            'rules' => 'trim|callback__checkGender'
         )
     ),
     'update_form' => array
@@ -34,17 +39,22 @@ $config = array
         array(
             'field' => 'name',
             'label' => 'Name',
-            'rules' => 'trim|callback__checkName',
+            'rules' => 'trim|callback__checkName'
         ),
         array(
             'field' => 'nickname',
             'label' => 'Nickname',
-            'rules' => 'trim|callback__checkNickname',
+            'rules' => 'trim|callback__checkNickname'
         ),
         array(
             'field' => 'phone',
             'label' => 'Phone',
-            'rules' => 'trim|integer',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'gender',
+            'label' => 'Gender',
+            'rules' => 'trim|callback__checkGender'
         )
     )
 );
