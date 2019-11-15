@@ -13,74 +13,51 @@ class UserModel extends CI_Model
         parent::__construct();
     }
 
+    const USER_TABLE = 'user';
+    const RECOMMEND_TABLE = 'recommend';
+
     public function register($user) {
+        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+        $user['gender'] = isset($user['gender']) ? $user['gender'] : null;
         $user['recommendCode'] = uniqid();
 
-        $sql = "  INSERT INTO User
-                          (name, nickname, password, phone, email, gender, recommendCode)
-                          VALUES
-                          (?, ?, ?, ?, ?, ?, ?)
-            ";
+        if(isset($user['recommender'])){
+            $recommender = $user['recommender'];
+            unset($user['recommender']);
+        }
 
-        $bind = array(
-            $user['name'],
-            $user['nickname'],
-            password_hash($user['password'], PASSWORD_DEFAULT),
-            $user['phone'],
-            $user['email'],
-            isset($user['gender']) ? $user['gender'] : null,
-            $user['recommendCode']
-        );
-
-        $result = $this->db->query($sql, $bind);
-        return $this->db->insert_id();
+        $result = $this->db->insert(self::USER_TABLE, $user);
+        $id = $this->db->insert_id();
+        $this->recommend($recommender, $id);
+        return $result;
     }
 
     public function update($user, $id) {
-        return $this->db->update('User', $user, array('id' => $id));
+        return $this->db->update(self::USER_TABLE, $user, array('id' => $id));
     }
 
     public function recommend($recommender, $id) {
-        $sql = "SELECT id
-                FROM User
-                WHERE RecommendCode = ?";
-
-        $result = $this->db->query($sql, array($recommender));
+        $result = $this->db->get_where(self::USER_TABLE, array('recommendCode' => $recommender));
         $row = $result->row();
         $recommenderId = $row->id;
 
-        $sql = "SELECT count(*) as cnt
-                FROM Recommend
-                WHERE Recommender = ?";
-
-        $result = $this->db->query($sql, array($recommenderId));
-        $row = $result->row();
-        $count = $row->cnt;
+        $this->db->where(array('recommender' => $recommenderId));
+        $count = $this->db->count_all_results(self::RECOMMEND_TABLE);
 
         if($count < 5) {
-            $sql = "INSERT INTO Recommend
-                        (recommender, recommendee)
-                        VALUES
-                        (?, ?)";
-
+            echo $count;
             $bind = array(
-                $recommenderId,
-                $id
+                'recommender' => $recommenderId,
+                'recommendee' => $id
             );
 
-            $result = $this->db->query($sql, $bind);
-
-            return $result;
+            return $result = $this->db->insert(self::RECOMMEND_TABLE, $bind);
         }
         return false;
     }
 
     public function get($id) {
-        $sql = "SELECT *
-                FROM User
-                WHERE id = ?";
-
-        $result = $this->db->query($sql, array($id));
+        $result = $this->db->get_where(self::USER_TABLE, array('id' => $id));
         $row = $result->row();
 
         return $row;
