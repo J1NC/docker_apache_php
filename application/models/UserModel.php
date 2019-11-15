@@ -45,7 +45,6 @@ class UserModel extends CI_Model
         $count = $this->db->count_all_results(self::RECOMMEND_TABLE);
 
         if($count < 5) {
-            echo $count;
             $bind = array(
                 'recommender' => $recommenderId,
                 'recommendee' => $id
