@@ -192,8 +192,15 @@ class User extends CI_Controller
         return ctype_lower($nickname);
     }
 
-    public function _checkGender($gender) {
-        return strcmp($gender, 'male') ? (strcmp($gender, 'female') ? false : true) : true;
+    public function _checkGender($gender)
+    {
+        $genderList = array('male', 'female');
+        if (!$gender){
+            return true;
+        } else {
+            if(array_search($gender, $genderList) === false)
+                return false;
+        }
     }
     /**
      * @param $httpCode integer HTTP 응답 코드
