@@ -5,6 +5,8 @@
  * 유저 데이터 : id(고유 인덱스), name(이름), nickname(별명), phone(전화번호), email(이메일), gender(성별), recommendCode(추천인 코드)
  * 입력값 제약
    ![image2-1](./image/image2-1.png)  
+ * 데이터베이스 설계
+   ![image14](./image/image14.png)
    
 ## 회원 데이터 생성(회원가입) API
 url : /user/register  
