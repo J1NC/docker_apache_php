@@ -210,13 +210,23 @@ class User extends CI_Controller
      * @return mixed
      */
     private function returnMsg($httpCode, $status, $message, $data = null){
-        return $this->output
-            ->set_content_type('application/json')
-            ->set_status_header($httpCode)
-            ->set_output(json_encode(array(
-                'status' => $status,
-                'message' => $message,
-                'data' => $data
-            )));
+        if($data) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header($httpCode)
+                ->set_output(json_encode(array(
+                    'status' => $status,
+                    'message' => $message,
+                    'data' => $data
+                )));
+        } else {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header($httpCode)
+                ->set_output(json_encode(array(
+                    'status' => $status,
+                    'message' => $message
+                )));
+        }
     }
 }
