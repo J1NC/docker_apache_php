@@ -1,73 +1,101 @@
 # Codeigniter를 이용한 Restful API 개발
 
-## 내용
+## 유의사항
+ * 진한 글씨(bold)는 필수로 필요로 하는 값  
+ * 유저 데이터 : id(고유 인덱스), name(이름), nickname(별명), phone(전화번호), email(이메일), gender(성별), recommendCode(추천인 코드)
+ * 입력값 제약
+   ![image2-1](./image/image2-1.png)  
+   
+## 회원 데이터 생성(회원가입) API
+url : /user/register  
+method : POST  
+body : **name(이름)**, **nickname(별명)**, **phone(전화번호)**, **password(비밀번호)**, **email(이메일)**, gender(성별), recommendCode(추천인 코드)  
+response : status(성공, 실패여부), message(응답 메세지)  
 
-서비스를 사용하는 회원 데이터에 대한 CRUD(Create, Read, Update, Delete)를 처리하는 **API**를 작성합니다.
+####요청 예시
+![image1](./image/image1.png)
 
-* **회원 데이터 생성(회원 가입) API**
-* **회원 데이터 수정 API**
-* **회원 데이터 삭제 API**
-* **하나의 회원 데이터 출력 API**
-* **여러 회원 데이터 출력(페이지를 나눠 출력) API**
+####응답 예시
+성공시  
+![image3](./image/image3.png)  
 
-위 5가지 기능을 담당하는 API를 작성하는 것이 과제입니다. 
-아래 제약 사항을 고려하여 개발하시기 바랍니다. 
+실패시  
+![image2](./image/image2.png)  
 
-* 현재 Git Repo의 PHP 버전은 7.1입니다. 7.3으로 변경하여 개발을 해주세요.
-* 회원 데이터를 가지고 페이지네이션을 구성해 주세요
-    * 조건 : 일관적 성능을 보장해야 합니다. (1 페이지와, 99,000 페이지의 응답 시간은 같아야 합니다)
-* 기존 회원은 최대 5명의 신규 회원의 가입을 추천할 수 있습니다.  
-* 회원 정보는 다음 규칙에 따라 저장합니다.
+## 회원 데이터 수정 API
+url : /user/update/{id}  
+method : PUT  
+parameter : id(고유 인덱스)  
+body : name(이름), nickname(별명), phone(전화번호), gender(성별)  
+response : status(성공, 실패여부), message(응답 메세지)  
 
-| 속성  | 길이  | 필수 여부  |  값의 제약 | 
-|---|---|---|---|
-| 이름 |  20 | 필수  | 한글, 영문 대소문자만 허용  |   
-| 별명 |  30 | 필수  | 영문 소문자만 허용  |   
-| 비밀번호 | 최소 10자 이상  | 필수  | 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상씩 포함  |   
-| 전화번호  | 20  | 필수  | 숫자  |   
-| 이메일 |  100 |  필수 |   |   
-| 성별 |   | 선택  |   |   
+####요청 예시
+![image4](./image/image4.png)
 
-## 개발에 사용할 소프트웨어
+####응답 예시
+성공시  
+![image5](./image/image5.png)  
 
-* Apache HTTPD
-* PHP 7.3
-* Codeigniter
-* MySQL
-* Git
-* Docker
-* Docker Compose
+실패시  
+![image6](./image/image6.png)  
 
-## 요구 사항
+## 회원 데이터 삭제 API
+url : /user/delete/{id}  
+method : DELETE  
+parameter : id(고유 인덱스)  
+response : status(성공, 실패여부), message(응답 메세지)  
 
-* API 출력 형식은 Json으로 출력해 주세요.
-* 데이터베이스 테이블 DDL, 데이터를 insert 하기 위한 query를 sql 파일로 포함해 주세요.
-* 제출 기한은 과제에 대한 안내를 받은 후 7일 이내입니다.
+###응답 예시
+성공시  
+![image7](./image/image7.png)  
 
-## 제출 방법 
-* 이메일 : dev_backend_hw@backpac.kr
-* 제목 : [지원자명] 홈워크 
-* 내용 : 자유롭게 적어주세요. **단, 결과물을 볼 수 있는 URL(github, bitbucket, gitlab 등의 링크) 첨부 필수**입니다. 
+실패시  
+![image8](./image/image8.png)  
 
-## 예외
+## 하나의 회원 데이터 출력 API
+url : /user/get/{id}  
+method : GET  
+parameter : id(고유 인덱스)  
+response : status(성공, 실패여부), message(응답 메세지), **data(성공시에만 * 유저 데이터 반환)**    
 
-개발에 사용할 소프트웨어를 사용하여 개발하는 과정에서 어려움이 있는 경우 해당 기술을 제외하고 완성해도 됩니다.
+####응답 예시
+성공시
+![image9](./image/image9.png)  
 
-## 개발환경 구성 : [링크](./docs/dev_env_setting.md)
+실패시  
+![image8](./image/image8.png)  
 
-## FAQ
+## 여러 회원 데이터 출력(페이지를 나눠 출력) API
+url : /user/getList/{page}/{limit}  
+method : GET  
+parameter : page(페이지, 기본값 1), limit(한 페이지에 보여질 유저의 수, 기본값 10)  
+response : status(성공, 실패여부), message(응답 메세지), **data(성공시에만 * 유저 데이터 반환)**
 
-* Q: 개발 환경 설정은 어떻게 하나요?
-    * A: [링크](./docs/dev_env_setting.md)로 이동하여 볼 수 있습니다.
-* Q: 데이터베이스 테이블 디자인은 어떻게 하나요?
-    * A: https://www.idus.com/w/join/signup의 입력 항목을 보신 후 직접 설계하시면 됩니다. 데이터베이스 설계 항목도 평가 항목 중 하나입니다.
-* Q: 데이터베이스 테이블명, 필드명은 정해져 있나요?
-    * A: 정해져 있지 않습니다. 익숙한 방식으로 하시면 됩니다.
-* Q: 정해져 있는 소프트웨어 외에 추가로 다른 소프트웨어를 사용해도 되나요?
-    * A: 소프트웨어 라이선스에 따라 상업적 용도로 사용해도 괜찮은 것은 사용 가능합니다. (Apache License 2.0, BSD License, MIT License, etc)
-* Q: 제출 기한은 어떻게 되나요?
-    * A: 과제를 받은 날로부터 7일 이내입니다. 
+####응답 예시
+성공시  
+* 요청  
+  ![image10](./image/image10.png)
+* 응답
+  ![image11](./image/image11.png)
 
-## 문의
+실패시  
+* 요청  
+  ![image12](./image/image12.png)
+* 응답
+  ![image13](./image/image13.png)
+    
 
-궁금한 점이 있다면 dev_backend_hw@backpac.kr로 연락 주시기 바랍니다.
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
