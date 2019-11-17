@@ -12,10 +12,10 @@ method : POST
 body : **name(이름)**, **nickname(별명)**, **phone(전화번호)**, **password(비밀번호)**, **email(이메일)**, gender(성별), recommendCode(추천인 코드)  
 response : status(성공, 실패여부), message(응답 메세지)  
 
-####요청 예시
+#### 요청 예시  
 ![image1](./image/image1.png)
 
-####응답 예시
+#### 응답 예시  
 성공시  
 ![image3](./image/image3.png)  
 
@@ -29,10 +29,10 @@ parameter : id(고유 인덱스)
 body : name(이름), nickname(별명), phone(전화번호), gender(성별)  
 response : status(성공, 실패여부), message(응답 메세지)  
 
-####요청 예시
+#### 요청 예시  
 ![image4](./image/image4.png)
 
-####응답 예시
+#### 응답 예시  
 성공시  
 ![image5](./image/image5.png)  
 
@@ -45,7 +45,7 @@ method : DELETE
 parameter : id(고유 인덱스)  
 response : status(성공, 실패여부), message(응답 메세지)  
 
-###응답 예시
+#### 응답 예시  
 성공시  
 ![image7](./image/image7.png)  
 
@@ -58,7 +58,7 @@ method : GET
 parameter : id(고유 인덱스)  
 response : status(성공, 실패여부), message(응답 메세지), **data(성공시에만 * 유저 데이터 반환)**    
 
-####응답 예시
+#### 응답 예시  
 성공시
 ![image9](./image/image9.png)  
 
@@ -71,7 +71,7 @@ method : GET
 parameter : page(페이지, 기본값 1), limit(한 페이지에 보여질 유저의 수, 기본값 10)  
 response : status(성공, 실패여부), message(응답 메세지), **data(성공시에만 * 유저 데이터 반환)**
 
-####응답 예시
+#### 응답 예시  
 성공시  
 * 요청  
   ![image10](./image/image10.png)
@@ -81,21 +81,5 @@ response : status(성공, 실패여부), message(응답 메세지), **data(성�
 실패시  
 * 요청  
   ![image12](./image/image12.png)
-* 응답
+* 응답  
   ![image13](./image/image13.png)
-    
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
